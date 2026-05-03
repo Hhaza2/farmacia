@@ -40,4 +40,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/leida', [AlertaController::class, 'marcarLeida'])->name('alertas.leida');
         Route::post('/todas-leidas', [AlertaController::class, 'marcarTodasLeidas'])->name('alertas.todasLeidas');
     });
+
+        Route::get('/admin/proveedores', function () {
+        return view('farmacia.proveedores');
+    });
 });
