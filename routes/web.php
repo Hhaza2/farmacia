@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AlertaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\AlertaController;
+use App\Http\Controllers\Inventario\LoteController;        
+use App\Http\Controllers\Inventario\MovimientoController;
 // Rutas para usuarios NO autenticados (guest)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -40,4 +41,26 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/leida', [AlertaController::class, 'marcarLeida'])->name('alertas.leida');
         Route::post('/todas-leidas', [AlertaController::class, 'marcarTodasLeidas'])->name('alertas.todasLeidas');
     });
+
+    //Inventario (lotes y movimientos)
+
+    Route::prefix('inventario')->name('inventario.')->group(function () {
+
+        // LOTES
+        Route::resource('lotes', LoteController::class)
+            ->only(['index', 'create', 'store', 'show']);
+
+        // MOVIMIENTOS
+        Route::get('lotes/{lote}/entrada', [MovimientoController::class, 'entrada'])
+            ->name('movimientos.entrada');
+        Route::get('lotes/{lote}/salida', [MovimientoController::class, 'salida'])
+            ->name('movimientos.salida');
+        Route::post('lotes/{lote}/movimiento', [MovimientoController::class, 'store'])
+            ->name('movimientos.store');
+
+        // HISTORIAL
+        Route::get('historial', [MovimientoController::class, 'historial'])
+            ->name('movimientos.historial');
+    });
+
 });

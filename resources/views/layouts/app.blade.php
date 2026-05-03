@@ -63,17 +63,25 @@
             <a href="#">Gestionar Usuarios</a>
             <a href="#">Reportes Generales</a>
             <a href="{{ route('alertas.index') }}">Alertas</a>
+            <a href="{{ route('inventario.lotes.index') }}">Lotes</a>
+            <a href="{{ route('inventario.lotes.create') }}">Nuevo Lote</a>
+            <a href="{{ route('inventario.movimientos.historial') }}">Historial Movimientos</a>
 
             @elseif(Auth::user()->role_id === 2)
             <a href="{{ route('farmacia.dashboard') }}">Inicio Farmacia</a>
             <a href="#">Inventario</a>
             <a href="#">Despacho de Recetas</a>
             <a href="{{ route('alertas.index') }}">Alertas</a>
+            <a href="{{ route('inventario.lotes.index') }}">Lotes</a>
+            <a href="{{ route('inventario.lotes.create') }}">Nuevo Lote</a>
+            <a href="{{ route('inventario.movimientos.historial') }}">Historial Movimientos</a>
 
             @elseif(Auth::user()->role_id === 3)
             <a href="{{ route('enfermeria.dashboard') }}">Inicio Enfermería</a>
             <a href="#">Pacientes</a>
             <a href="#">Toma de Signos</a>
+            <a href="{{ route('inventario.lotes.index') }}">Lotes</a>
+            <a href="{{ route('inventario.movimientos.historial') }}">Historial Movimientos</a>
             @endif
         </div>
 
