@@ -10,6 +10,20 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 });
 
+Route::get('/', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        
+        return match ($user->role_id) {
+            1 => redirect()->route('admin.dashboard'),
+            2 => redirect()->route('farmacia.dashboard'),
+            3 => redirect()->route('enfermeria.dashboard'),
+            default => redirect()->route('login'),
+        };
+    }
+    return redirect()->route('login');
+});
+
 // Rutas para usuarios SÍ autenticados (auth)
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

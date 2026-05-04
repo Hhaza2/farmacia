@@ -35,6 +35,15 @@
 
         <br>
 
+        <div>
+            <label>
+                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                Recordarme
+            </label>
+        </div>
+
+        <br>
+
         <button type="submit">Entrar</button>
     </form>
 </body>
