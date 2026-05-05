@@ -14,13 +14,13 @@
         -webkit-font-smoothing: auto; 
     }
     
-    /* Encabezado */
     .header-section {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 2rem;
     }
+
     .title-wrapper h1 {
         font-size: 1.85rem;
         font-weight: 700;
@@ -28,13 +28,7 @@
         letter-spacing: -0.03em;
         margin: 0;
     }
-    .title-wrapper p {
-        color: #64748b;
-        font-size: 0.95rem;
-        margin: 0.3rem 0 0 0;
-    }
-    
-    /* BOTÓN RESTAURADO (IDÉNTICO A INSUMOS) */
+
     .btn-primary-custom {
         background-color: #0f172a;
         color: #ffffff;
@@ -47,12 +41,6 @@
         align-items: center;
         gap: 0.5rem;
         cursor: pointer;
-        transition: all 0.2s ease;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-    .btn-primary-custom:hover {
-        background-color: #1e293b;
-        transform: translateY(-1px);
     }
 
     .btn-secondary {
@@ -69,7 +57,7 @@
         cursor: pointer;
     }
 
-    /* Toolbar */
+    /* Toolbar y Buscador */
     .toolbar {
         display: flex;
         justify-content: space-between;
@@ -77,10 +65,12 @@
         padding: 1.5rem;
         gap: 1rem;
     }
+
     .search-box {
         position: relative;
         width: 350px;
     }
+
     .search-box i {
         position: absolute;
         left: 1rem;
@@ -89,6 +79,7 @@
         color: #94a3b8;
         font-size: 1.2rem;
     }
+
     .search-box input {
         width: 100%;
         padding: 0.6rem 1rem 0.6rem 2.8rem;
@@ -98,7 +89,7 @@
         outline: none;
     }
 
-    /* Tabla con Negrita Potente */
+    /* Tabla Estilo Proveedores (Negrita 800) */
     .table-card {
         background: #ffffff;
         border-radius: 12px;
@@ -106,93 +97,67 @@
         border: 1px solid #e2e8f0;
         overflow: hidden;
     }
+
     .custom-table {
         width: 100%;
         border-collapse: collapse;
     }
+
     .custom-table th {
         background-color: #f8fafc;
         color: #1e293b;
         font-size: 0.75rem;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
         font-weight: 800;
         padding: 1.2rem 1.5rem;
         text-align: left;
         border-bottom: 2px solid #e2e8f0;
     }
+
     .custom-table td {
         padding: 1.2rem 1.5rem;
         vertical-align: middle;
         border-bottom: 1px solid #f1f5f9;
     }
 
-    /* NEGRITA PURA PARA DATOS */
-    .provider-details strong {
+    .item-details strong {
         display: block;
         color: #000000 !important; 
         font-size: 0.95rem;
         font-weight: 800 !important; 
         line-height: 1.4;
-        margin-bottom: 2px;
     }
-    .provider-details span {
+
+    .item-details span {
         color: #475569;
         font-size: 0.8rem;
         font-weight: 500;
     }
 
-    /* Avatar e Identidad */
-    .provider-identity { display: flex; align-items: center; gap: 1rem; }
     .avatar {
-        width: 42px;
-        height: 42px;
-        border-radius: 10px;
-        background: #eff6ff;
-        color: #2563eb;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 0.95rem;
-        border: 1.5px solid #dbeafe;
+        width: 42px; height: 42px; border-radius: 10px;
+        background: #eff6ff; color: #2563eb;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 800; border: 1.5px solid #dbeafe;
         flex-shrink: 0;
     }
 
-    /* Píldoras de Estado (VERDE ESMERALDA VIBRANTE) */
     .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        padding: 0.4rem 0.9rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 800;
-        background-color: #ecfdf5 !important; 
-        color: #047857 !important;
+        display: inline-flex; align-items: center; gap: 0.35rem;
+        padding: 0.4rem 0.9rem; border-radius: 9999px;
+        font-size: 0.75rem; font-weight: 800;
+        background-color: #ecfdf5 !important; color: #047857 !important;
         border: 1px solid #10b981 !important;
     }
     .status-badge i { color: #10b981 !important; font-size: 0.45rem; }
 
-    /* Acciones */
     .btn-icon {
-        background: transparent;
-        border: none;
-        color: #94a3b8;
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: 0.2s;
-        font-size: 1.25rem;
+        background: transparent; border: none; color: #94a3b8;
+        width: 36px; height: 36px; font-size: 1.25rem; cursor: pointer;
     }
-    .btn-icon:hover { background-color: #f1f5f9; color: #0f172a; }
 
     .table-footer {
-        padding: 1rem 1.5rem;
+        padding: 1.5rem;
         background-color: #ffffff;
         border-top: 1px solid #e2e8f0;
         display: flex;
@@ -206,12 +171,11 @@
 <div class="dashboard-premium">
     <div class="header-section">
         <div class="title-wrapper">
-            <h1>Directorio de Proveedores</h1>
-            <p>Gestiona los laboratorios y distribuidores médicos de la institución.</p>
+            <h1>Inventario de Insumos</h1>
+            <p>Control de stock y suministros médicos de la farmacia.</p>
         </div>
-        <!-- BOTÓN CON DISEÑO ORIGINAL -->
-        <button class="btn-primary-custom" id="btnNuevoProveedor">
-            <i class='bx bx-plus'></i> Registrar Proveedor
+        <button class="btn-primary-custom">
+            <i class='bx bx-plus'></i> Registrar Insumo
         </button>
     </div>
 
@@ -219,7 +183,7 @@
         <div class="toolbar">
             <div class="search-box">
                 <i class='bx bx-search'></i>
-                <input type="text" id="inputBuscarProveedor" placeholder="Buscar por nombre, ID o email...">
+                <input type="text" id="inputBuscarInsumo" placeholder="Buscar por nombre o código...">
             </div>
             <div style="display: flex; gap: 0.75rem;">
                 <button class="btn-secondary"><i class='bx bx-filter-alt'></i> Filtros</button>
@@ -230,18 +194,19 @@
         <table class="custom-table">
             <thead>
                 <tr>
-                    <th style="width: 25%;">Información del Proveedor</th>
-                    <th style="width: 25%;">Datos de Contacto</th>
-                    <th style="width: 25%;">Ubicación / Dirección</th>
-                    <th style="width: 15%;">Estado</th>
-                    <th style="width: 10%; text-align: right;">Acciones</th>
+                    <th style="width: 25%;">Insumo / Código</th>
+                    <th style="width: 25%;">Descripción / ID</th>
+                    <th style="width: 20%;">Proveedor / Categoría</th>
+                    <th style="width: 15%;">Stock Mínimo / Estado</th>
+                    <th style="width: 15%; text-align: right;">Acciones</th>
                 </tr>
             </thead>
-            <tbody id="cuerpoTablaProveedores">
-                <tr><td colspan="5" style="text-align:center; padding:3rem;">Cargando proveedores...</td></tr>
+            <tbody id="cuerpoTablaInsumos">
+                <tr><td colspan="5" style="text-align:center; padding:3rem;">Cargando inventario...</td></tr>
             </tbody>
         </table>
 
+        <!-- FOOTER BIEN UBICADO ABAJO -->
         <div class="table-footer">
             <span id="contadorResultados">Mostrando resultados</span>
             <div style="display: flex; gap: 0.5rem;">
@@ -253,63 +218,59 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        cargarProveedores();
+    document.addEventListener('DOMContentLoaded', cargarInsumos);
 
-        const inputBuscar = document.getElementById('inputBuscarProveedor');
-        if(inputBuscar) {
+    async function cargarInsumos() {
+        const tabla = document.getElementById('cuerpoTablaInsumos');
+        try {
+            const response = await fetch('/api/insumos');
+            const insumos = await response.json();
+            tabla.innerHTML = '';
+
+            const inputBuscar = document.getElementById('inputBuscarInsumo');
             inputBuscar.addEventListener('keyup', function() {
                 let filtro = this.value.toLowerCase();
-                let filas = document.querySelectorAll('#cuerpoTablaProveedores tr');
-                filas.forEach(fila => {
+                document.querySelectorAll('#cuerpoTablaInsumos tr').forEach(fila => {
                     fila.style.display = fila.innerText.toLowerCase().includes(filtro) ? '' : 'none';
                 });
             });
-        }
-    });
 
-    async function cargarProveedores() {
-        const tabla = document.getElementById('cuerpoTablaProveedores');
-        try {
-            const response = await fetch('/api/proveedores');
-            if (!response.ok) throw new Error('Error API');
-            const proveedores = await response.json();
-            tabla.innerHTML = '';
+            document.getElementById('contadorResultados').innerHTML = `Mostrando <strong>${insumos.length}</strong> resultados`;
 
-            const contador = document.getElementById('contadorResultados');
-            if(contador) contador.innerHTML = `Mostrando <strong>${proveedores.length}</strong> resultados`;
-
-            proveedores.forEach(p => {
-                const iniciales = p.nombre ? p.nombre.substring(0, 2).toUpperCase() : 'PR';
-                const activo = p.estado_id == 1;
+            insumos.forEach(i => {
+                const iniciales = i.nombre ? i.nombre.substring(0, 2).toUpperCase() : 'IN';
+                const activo = i.estado_id == 1;
 
                 tabla.innerHTML += `
                     <tr>
                         <td>
-                            <div class="provider-identity">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
                                 <div class="avatar">${iniciales}</div>
-                                <div class="provider-details">
-                                    <strong>${p.nombre}</strong>
-                                    <span>Código ID: #${p.id}</span>
+                                <div class="item-details">
+                                    <strong>${i.nombre}</strong>
+                                    <span>Código ID: #${i.id}</span>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <div class="provider-details">
-                                <strong>${p.email || 'Sin email'}</strong>
-                                <span>Tel: ${p.telefono || 'Sin teléfono'}</span>
+                            <div class="item-details">
+                                <strong>${i.descripcion || 'Sin descripción'}</strong>
+                                <span>Ref: ${i.codigo || 'N/A'}</span>
                             </div>
                         </td>
                         <td>
-                            <div class="provider-details">
-                                <strong>${p.direccion || 'No especificada'}</strong>
-                                <span>Ubicación registrada</span>
+                            <div class="item-details">
+                                <strong>Proveedor ID: #${i.proveedor_id || 'N/A'}</strong>
+                                <span>Categoría ID: #${i.categoria_id || 'N/A'}</span>
                             </div>
                         </td>
                         <td>
-                            <span class="${activo ? 'status-badge' : 'status-badge-inactive'}">
-                                <i class='bx bxs-circle'></i> ${activo ? 'Activo' : 'Inactivo'}
-                            </span>
+                            <div class="item-details">
+                                <strong>Mínimo: ${i.stock_minimo}</strong>
+                                <span class="${activo ? 'status-badge' : 'status-badge-inactive'}">
+                                    <i class='bx bxs-circle'></i> ${activo ? 'Activo' : 'Inactivo'}
+                                </span>
+                            </div>
                         </td>
                         <td>
                             <div style="display: flex; justify-content: flex-end; gap: 5px;">
@@ -321,8 +282,7 @@
                 `;
             });
         } catch (error) {
-            console.error(error);
-            tabla.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red; padding:2rem;">⚠️ Error al cargar datos</td></tr>';
+            tabla.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem; color:red;">Error al cargar datos</td></tr>';
         }
     }
 </script>

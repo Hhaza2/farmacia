@@ -18,6 +18,7 @@ Route::get('/proveedores/obtener/todos', [ProveedorController::class, 'obtenerTo
 Route::post('/proveedores/crear', [ProveedorController::class, 'crear']);
 Route::put('/proveedores/actualizar', [ProveedorController::class, 'actualizarPorId']);
 Route::delete('/proveedores/eliminar/{id}', [ProveedorController::class, 'eliminarPorId']);
+Route::get('/proveedores', [ProveedorController::class, 'index']);
 
 // rutas para insumos
 Route::get('/insumos/obtener/todos', [InsumoController::class, 'obtenerTodos']);
@@ -25,6 +26,7 @@ Route::post('/insumos/crear', [InsumoController::class, 'crear']);
 Route::put('/insumos/actualizar', [InsumoController::class, 'actualizarPorId']);
 Route::delete('/insumos/eliminar/{id}', [InsumoController::class, 'eliminarPorId']);
 Route::get('/insumos/buscar/{termino}', [InsumoController::class, 'buscar']);
+Route::get('/insumos', [InsumoController::class, 'index']);
 
 // rutas para categorias
 Route::get('/categorias/obtener/todos', [CategoriaController::class, 'obtenerTodos']);

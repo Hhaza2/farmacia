@@ -66,4 +66,8 @@ class InsumoController extends Controller
             
         return response()->json($resultados);
     }
+
+    public function index() {
+    return response()->json(Insumo::all()); 
+    }
 }

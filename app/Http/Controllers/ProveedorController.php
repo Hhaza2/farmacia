@@ -59,4 +59,10 @@ class ProveedorController extends Controller
         $message = ["message" => "Proveedor eliminado con éxito", "status" => true];
         return response()->json($message);
     }
+
+    public function index()
+    {
+        $proveedores = Proveedor::all(); 
+        return response()->json($proveedores);
+    }
 }

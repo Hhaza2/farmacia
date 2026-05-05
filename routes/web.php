@@ -58,4 +58,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/proveedores', function () {
         return view('farmacia.proveedores');
     });
+
+    Route::get('/admin/insumos', function () {
+        return view('farmacia.insumos'); 
+    })->name('insumos.index');
+    
 });
