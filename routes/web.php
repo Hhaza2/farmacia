@@ -63,4 +63,9 @@ Route::middleware('auth')->group(function () {
         return view('farmacia.insumos'); 
     })->name('insumos.index');
     
+    Route::middleware(['auth', 'role:1'])->group(function () {
+        Route::get('/admin/configuraciones', function () {
+            return view('admin.configuraciones');
+        });
+    });
 });

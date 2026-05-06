@@ -36,7 +36,7 @@ class InsumoController extends Controller
     public function actualizarPorId(Request $request) {
         $id = $request->id;
         $data = Insumo::find($id);
-        
+
         $data->nombre = $request->nombre;
         $data->proveedor_id = $request->proveedor_id;
         $data->descripcion = $request->descripcion;
@@ -68,6 +68,6 @@ class InsumoController extends Controller
     }
 
     public function index() {
-    return response()->json(Insumo::all()); 
+        return response()->json(Insumo::all()); 
     }
 }

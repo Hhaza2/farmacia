@@ -39,6 +39,7 @@ class UbicacionController extends Controller
         
         $data->nombre = $request->nombre;
         $data->descripcion = $request->descripcion;
+        $data->estado_id = $request->estado_id;
         
         $data->save();
         

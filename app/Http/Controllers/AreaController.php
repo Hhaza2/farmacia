@@ -39,6 +39,7 @@ class AreaController extends Controller
         
         $data->nombre = $request->nombre;
         $data->descripcion = $request->descripcion;
+        $data->estado_id = $request->estado_id;
         
         $data->save();
         
@@ -73,6 +74,7 @@ class AreaController extends Controller
         // Busca coincidencias en nombre, descripción o coincidencia exacta en ID
         $resultados = Area::where('nombre', 'like', '%' . $termino . '%')
             ->orWhere('descripcion', 'like', '%' . $termino . '%')
+            ->orWhere('estado_id', $termino )
             ->orWhere('id', $termino)
             ->get();
             
