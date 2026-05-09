@@ -6,58 +6,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Sistema de Salud')</title>
 
+    <!-- Fuentes e Íconos Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <style>
-        /* Estilos súper básicos solo para visualizar la estructura */
+        /* Estilos Base */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #f8fafc;
+            -webkit-font-smoothing: antialiased;
         }
 
-        nav {
-            background-color: #333;
-            color: white;
-            padding: 1rem;
+        /* Barra de Navegación Blanca Premium */
+        .navbar-premium {
+            background-color: #ffffff;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        nav a {
-            color: white;
+        /* Logotipo / Marca */
+        .brand strong {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.03em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .brand strong i { color: #2563eb; font-size: 1.5rem; }
+
+        /* Contenedor Global del Menú */
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        /* Enlaces de Navegación */
+        .nav-links {
+            display: flex;
+            gap: 0.2rem;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .nav-links a {
+            color: #64748b;
             text-decoration: none;
-            margin-right: 15px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+        }
+        
+        .nav-links a i { font-size: 1.15rem; }
+        .nav-links a:hover { background-color: #f1f5f9; color: #0f172a; }
+
+        .nav-links a.active-link {
+            background-color: #0f172a !important; 
+            color: #ffffff !important;           
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
         }
 
+        /* Menú de Usuario */
         .user-menu {
             display: flex;
-            gap: 15px;
+            gap: 1.5rem;
             align-items: center;
         }
 
-        main {
-            padding: 20px;
+        .user-greeting {
+            color: #334155;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .user-avatar-icon {
+            background: #e2e8f0; color: #475569; padding: 0.4rem; 
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-size: 1.1rem;
         }
 
-        button.logout-btn {
-            background: #ff4c4c;
-            color: white;
+        /* Botón de Cerrar Sesión */
+        .logout-btn {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white; border: none; padding: 0.5rem 1rem;
+            border-radius: 8px; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .logout-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* Botón Menú Hamburguesa (Oculto en PC) */
+        .menu-toggle {
+            display: none;
+            background: transparent;
             border: none;
-            padding: 5px 10px;
+            font-size: 2rem;
+            color: #0f172a;
             cursor: pointer;
+            padding: 0;
+        }
+
+        /* ========================================================
+           ADAPTACIÓN PARA CELULARES Y TABLETS (Media Queries)
+           ======================================================== */
+        @media (max-width: 1100px) {
+            .navbar-premium {
+                padding: 1rem;
+            }
+
+            .menu-toggle {
+                display: block; /* Mostramos la hamburguesa */
+            }
+
+            /* Escondemos el menú normal y lo preparamos para ser desplegable */
+            .nav-wrapper {
+                display: none; 
+                flex-direction: column;
+                position: absolute;
+                top: 100%; /* Justo debajo del navbar */
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                padding: 1.5rem;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                border-top: 1px solid #e2e8f0;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            /* Clase que se activa con JS para mostrar el menú */
+            .nav-wrapper.active {
+                display: flex;
+            }
+
+            /* Ajustes para que los enlaces ocupen todo el ancho en celular */
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-links a {
+                width: 100%;
+                padding: 0.8rem 1rem;
+                font-size: 0.95rem;
+            }
+
+            /* Ajustes del usuario para celular */
+            .user-menu {
+                flex-direction: column;
+                width: 100%;
+                border-top: 1px solid #e2e8f0;
+                padding-top: 1rem;
+                gap: 1rem;
+            }
+
+            .user-greeting {
+                justify-content: center;
+            }
+
+            .logout-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <nav>
+    <nav class="navbar-premium">
         <div class="brand">
-            <strong>Mi Proyecto</strong>
+            <strong><i class='bx bx-plus-medical'></i> F A R M A C I A</strong>
         </div>
 
-        @auth
-        <div class="nav-links">
+    @auth
+        <!-- Botón Hamburguesa -->
+        <button class="menu-toggle" id="mobile-menu-btn">
+            <i class='bx bx-menu'></i>
+        </button>
+
+        <!-- Contenedor Envolvente -->
+        <div class="nav-wrapper" id="nav-wrapper">
+            <div class="nav-links">
             @if(Auth::user()->role_id === 1)
             <a href="{{ route('admin.dashboard') }}">Inicio Admin</a>
             <a href="#">Gestionar Usuarios</a>
@@ -82,24 +242,89 @@
             <a href="#">Toma de Signos</a>
             <a href="{{ route('inventario.lotes.index') }}">Lotes</a>
             <a href="{{ route('inventario.movimientos.historial') }}">Historial Movimientos</a>
+                
+                <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active-link' : '' }}">
+                    <i class='bx bx-home-alt'></i> Inicio Admin
+                </a>
+                
+                <a href="#" class="{{ request()->is('admin/usuarios*') ? 'active-link' : '' }}">
+                    <i class='bx bx-group'></i> Gestionar Usuarios
+                </a>
+                
+                <a href="{{ url('/admin/proveedores') }}" class="{{ request()->is('admin/proveedores*') ? 'active-link' : '' }}">
+                    <i class='bx bxs-truck'></i> Gestión Proveedores
+                </a>
+                
+                <a href="{{ url('/admin/insumos') }}" class="{{ request()->is('admin/insumos*') ? 'active-link' : '' }}">
+                    <i class='bx bx-box'></i> Gestión Insumos
+                </a>
+                
+                <a href="{{ route('alertas.index') }}" class="{{ (request()->is('alertas*') || request()->is('admin/alertas*')) ? 'active-link' : '' }}">
+                    <i class='bx bx-bell'></i> Alertas
+                </a>
+
+                <a href="{{ url('/admin/configuraciones') }}" class="{{ request()->is('admin/configuraciones*') ? 'active-link' : '' }}">
+                    <i class='bx bx-cog'></i> Configuraciones
+                </a>
+
+            @elseif(Auth::user()->role_id === 2)
+                <a href="{{ route('farmacia.dashboard') }}" class="{{ request()->is('farmacia/dashboard') ? 'active-link' : '' }}">
+                    <i class='bx bx-home-alt'></i> Inicio Farmacia
+                </a>
+                
+                <a href="{{ url('/admin/insumos') }}" class="{{ request()->is('admin/insumos*') ? 'active-link' : '' }}">
+                    <i class='bx bx-box'></i> Inventario Insumos
+                </a>
+                
+                <a href="{{ url('/admin/proveedores') }}" class="{{ request()->is('admin/proveedores*') ? 'active-link' : '' }}">
+                    <i class='bx bxs-truck'></i> Proveedores
+                </a>
+                
             @endif
-        </div>
+            </div>
 
-        <div class="user-menu">
-            <span>Hola, {{ Auth::user()->name }}</span>
+            <div class="user-menu">
+                <span class="user-greeting">
+                    <div class="user-avatar-icon"><i class='bx bx-user'></i></div>
+                    Hola, {{ Auth::user()->name }}
+                </span>
 
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="logout-btn">Cerrar Sesión</button>
-            </form>
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0; width: 100%;">
+                    @csrf
+                    <button type="submit" class="logout-btn"><i class='bx bx-log-out-circle'></i> Cerrar Sesión</button>
+                </form>
+            </div>
         </div>
-        @endauth
+    @endauth
     </nav>
 
     <main>
         @yield('content')
     </main>
 
-</body>
+    <!-- Script para desplegar el menú en celular -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnMenu = document.getElementById('mobile-menu-btn');
+            const navWrapper = document.getElementById('nav-wrapper');
 
+            if(btnMenu && navWrapper) {
+                btnMenu.addEventListener('click', function() {
+                    // Alterna la clase active que muestra el menú
+                    navWrapper.classList.toggle('active');
+                    
+                    // Cambia el ícono de hamburguesa a una "X" y viceversa
+                    const icono = btnMenu.querySelector('i');
+                    if(icono.classList.contains('bx-menu')) {
+                        icono.classList.remove('bx-menu');
+                        icono.classList.add('bx-x');
+                    } else {
+                        icono.classList.remove('bx-x');
+                        icono.classList.add('bx-menu');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
 </html>
