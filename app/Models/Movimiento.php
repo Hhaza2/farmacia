@@ -8,8 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Movimiento extends Model
 {
     protected $fillable = [
-        'lote_id', 'tipo', 'cantidad',
-        'motivo', 'referencia', 'usuario_id',
+        'lote_id',
+        'user_id',
+        'tipo',
+        'cantidad',
+        'motivo',
+        'referencia',
+        'usuario_id',
     ];
 
     public function lote(): BelongsTo

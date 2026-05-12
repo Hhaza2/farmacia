@@ -9,9 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Lote extends Model
 {
     protected $fillable = [
-        'codigo_lote', 'insumo_id', 'cantidad_inicial',
-        'cantidad_actual', 'fecha_vencimiento', 'fecha_entrada',
-        'proveedor', 'estado', 'registrado_por',
+        'codigo_lote',
+        'codigo_producto',
+        'insumo_id',
+        'cantidad_inicial',
+        'cantidad_actual',
+        'fecha_vencimiento',
+        'fecha_entrada',
+        'proveedor',
+        'estado',
+        'registrado_por',
     ];
 
     protected $casts = [

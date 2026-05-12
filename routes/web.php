@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AlertaController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\Inventario\LoteController;
 use App\Http\Controllers\Inventario\MovimientoController;
 
@@ -56,6 +57,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AlertaController::class, 'index'])->name('alertas.index');
         Route::post('/{id}/leida', [AlertaController::class, 'marcarLeida'])->name('alertas.leida');
         Route::post('/todas-leidas', [AlertaController::class, 'marcarTodasLeidas'])->name('alertas.todasLeidas');
+    });
+
+    // Reportes (Admin y Farmacéutico)
+    Route::middleware('role:1,2')->prefix('reportes')->name('reportes.')->group(function () {
+        Route::get('/stock', [ReporteController::class, 'stock'])->name('stock');
+        Route::get('/stock/pdf', [ReporteController::class, 'stockPdf'])->name('stock.pdf');
+        Route::get('/consumo', [ReporteController::class, 'consumo'])->name('consumo');
+        Route::get('/consumo/pdf', [ReporteController::class, 'consumoPdf'])->name('consumo.pdf');
+        Route::get('/ingresos', [ReporteController::class, 'ingresos'])->name('ingresos');
+        Route::get('/ingresos/pdf', [ReporteController::class, 'ingresosPdf'])->name('ingresos.pdf');
     });
 
     // Rutas de Admin (proveedores, insumos, configuraciones)
