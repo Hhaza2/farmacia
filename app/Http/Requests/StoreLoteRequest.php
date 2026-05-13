@@ -20,7 +20,6 @@ class StoreLoteRequest extends FormRequest
             'cantidad_inicial'  => 'required|integer|min:1|max:999999',
             'fecha_vencimiento' => 'required|date|after:today',
             'proveedor'         => 'nullable|string|max:100',
-
         ];
     }
 
