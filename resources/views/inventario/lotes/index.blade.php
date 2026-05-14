@@ -244,7 +244,7 @@
         </div>
         @if(in_array(auth()->user()->role_id, [1, 2]))
             <a href="{{ route('inventario.lotes.create') }}" class="btn-main">
-                + Nuevo Lote
+                <i class="fa-solid fa-plus"></i> Nuevo Lote
             </a>
         @endif
     </div>
@@ -301,9 +301,13 @@
 
         {{-- Botones --}}
         <div class="filter-actions">
-            <button type="submit" class="btn-filter">🔍 Filtrar</button>
+            <button type="submit" class="btn-filter">
+                <i class="fa-solid fa-magnifying-glass"></i> Filtrar
+            </button>
             @if(request()->hasAny(['search', 'estado', 'insumo_id', 'vencimiento']))
-                <a href="{{ route('inventario.lotes.index') }}" class="btn-clear">✕ Limpiar</a>
+                <a href="{{ route('inventario.lotes.index') }}" class="btn-clear">
+                    <i class="fa-sharp fa-light fa-filter-circle-xmark"></i>
+                </a>
             @endif
         </div>
 
@@ -344,9 +348,9 @@
                 </td>
                 <td>{{ $lote->registrador->name ?? 'Sistema' }}</td>
                 <td class="actions text-end">
-                    <a href="{{ route('inventario.lotes.show', $lote) }}">👁</a>
-                    <a href="{{ route('inventario.movimientos.entrada', $lote) }}">➕</a>
-                    <a href="{{ route('inventario.movimientos.salida', $lote) }}">➖</a>
+                    <a href="{{ route('inventario.lotes.show', $lote) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ route('inventario.movimientos.entrada', $lote) }}"><i class="fa-regular fa-plus"></i></a>
+                    <a href="{{ route('inventario.movimientos.salida', $lote) }}"><i class="fa-solid fa-minus"></i></a>
                 </td>
             </tr>
             @endforeach
@@ -359,7 +363,7 @@
 
     @else
     <div class="empty">
-        📦 No se encontraron lotes con los filtros aplicados.
+        <i class="fa-graphite fa-thin fa-box"></i> No se encontraron lotes con los filtros aplicados.
     </div>
     @endif
 

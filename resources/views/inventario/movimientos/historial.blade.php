@@ -275,9 +275,13 @@
 
         {{-- Botones --}}
         <div class="filter-actions">
-            <button type="submit" class="btn-filter">🔍 Filtrar</button>
+            <button type="submit" class="btn-filter">
+                <i class="fa-solid fa-magnifying-glass"></i> Filtrar
+            </button>
             @if(request()->hasAny(['search', 'tipo', 'insumo_id', 'fecha_desde', 'fecha_hasta']))
-                <a href="{{ route('inventario.movimientos.historial') }}" class="btn-clear">✕ Limpiar</a>
+                <a href="{{ route('inventario.movimientos.historial') }}" class="btn-clear">
+                    <i class="fa-sharp fa-light fa-filter-circle-xmark"></i>
+                </a>
             @endif
         </div>
 
@@ -323,7 +327,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="empty">📭 No hay movimientos con los filtros aplicados.</td>
+                    <td colspan="8" class="empty"><i class="fa-regular fa-mailbox-open-letter"></i> No hay movimientos con los filtros aplicados.</td>
                 </tr>
                 @endforelse
             </tbody>
