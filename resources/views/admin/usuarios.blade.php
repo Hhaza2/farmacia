@@ -7,7 +7,6 @@
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <style>
-    /* DISEÑO PREMIUM BASE */
     .dashboard-premium {
         font-family: 'Inter', sans-serif;
         padding: 2.5rem 3.5rem;
@@ -67,9 +66,7 @@
     .btn-danger-custom { background-color: #ef4444; color: #ffffff; border: none; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; text-align: center; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2); }
     .btn-danger-custom:hover { background-color: #dc2626; }
 
-    /* ==========================================
-       SISTEMA DE NOTIFICACIONES (TOAST) PREMIUM
-       ========================================== */
+
     #toast-container {
         position: fixed;
         top: 20px;
@@ -194,7 +191,7 @@
                     <label>Rol Asignado:</label>
                     <select id="usuario-rol" required></select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="grupo-estado">
                     <label>Estado Inicial:</label>
                     <select id="usuario-estado">
                         <option value="1">Activo</option>
@@ -234,7 +231,7 @@
 
 <script>
     const urlBase = '/api';
-    // INYECTAMOS EL ID DEL ADMIN LOGUEADO DIRECTAMENTE DESDE BLADE
+    // insertamos el ID del usuario autenticado para bloquear acciones sobre su propio perfil
     const currentUserId = {{ Auth::id() }}; 
 
     let usuariosCompletos = [];
@@ -251,9 +248,9 @@
         3: { texto: 'Suspendido', bg: '#fef2f2', text: '#b91c1c', border: '#fecaca', icono: 'bxs-error-circle' }
     };
 
-    // ==========================================
-    // SISTEMA DE NOTIFICACIONES (TOAST)
-    // ==========================================
+    // *************************************************
+    // notificaciones tipo toast y funciones de manejo de módulos, carga de datos, filtrado y renderizado
+    // *************************************************
     function mostrarToast(mensaje, tipo = 'success') {
         const contenedor = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -359,7 +356,7 @@
                     <td><div class="item-details"><strong>${rolObj ? (rolObj.nombre || rolObj.name) : 'Sin rol'}</strong><span>Permiso #${u.role_id}</span></div></td>
                     <td><div class="item-details"><span class="status-badge" style="background-color: ${state.bg} !important; color: ${state.text} !important; border-color: ${state.border} !important;"><i class='bx ${state.icono}'></i> ${state.texto}</span></div></td>
                     <td>
-                        <div style="display: flex; justify-content: flex-end; items-center; gap: 5px;">
+                        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 5px;">
                             ${accionesHtml}
                         </div>
                     </td>
@@ -379,14 +376,15 @@
         renderizarTabla(); 
     }
 
-    // ==========================================
     // MODALES
-    // ==========================================
     function abrirModalCrear() {
         document.getElementById('formulario-datos').reset();
         document.getElementById('usuario-id').value = '';
         document.getElementById('usuario-password').required = true;
         document.getElementById('helper-password').style.display = 'none';
+        
+        document.getElementById('grupo-estado').style.display = 'none';
+        
         document.getElementById('modal-titulo').innerText = 'Registrar Usuario';
         document.getElementById('modal-formulario').style.display = 'flex';
     }
@@ -403,6 +401,8 @@
         inputPass.value = ''; 
         inputPass.required = false;
         document.getElementById('helper-password').style.display = 'block';
+        document.getElementById('grupo-estado').style.display = 'block';
+        
         document.getElementById('modal-titulo').innerText = 'Editar Usuario #' + u.id;
         document.getElementById('modal-formulario').style.display = 'flex';
     }
@@ -423,9 +423,7 @@
         idAEliminar = null; 
     }
 
-    // ==========================================
-    // LLAMADAS A LA API (GUARDAR / ELIMINAR)
-    // ==========================================
+    // consumo de API para crear/actualizar usuarios
     async function guardarRegistro(e) {
         e.preventDefault(); 
         const id = document.getElementById('usuario-id').value;

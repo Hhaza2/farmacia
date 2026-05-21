@@ -13,7 +13,6 @@
         -webkit-font-smoothing: auto; 
     }
     
-    /* Encabezado */
     .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
     .title-wrapper h1 { font-size: 1.85rem; font-weight: 700; color: #0f172a; letter-spacing: -0.03em; margin: 0; }
     .title-wrapper p { color: #64748b; font-size: 0.95rem; margin: 0.3rem 0 0 0; }
@@ -33,7 +32,6 @@
     .btn-secondary:hover:not(:disabled) { background-color: #f8fafc; }
     .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* Pestañas */
     .tabs-premium {
         display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: #ffffff; padding: 0.5rem;
         border-radius: 10px; border: 1px solid #e2e8f0; width: fit-content; box-shadow: 0 2px 4px -1px rgba(0,0,0,0.03);
@@ -46,7 +44,6 @@
     .tab-btn:hover { background-color: #f1f5f9; color: #0f172a; }
     .tab-btn.active { background-color: #eff6ff; color: #2563eb; }
 
-    /* Contenedor Tabla y Toolbar */
     .table-card {
         background: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         border: 1px solid #e2e8f0; overflow: hidden;
@@ -77,7 +74,6 @@
         border: 1.5px solid #dbeafe; flex-shrink: 0;
     }
 
-    /* Badges de Estado */
     .badge {
         display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.8rem;
         border-radius: 9999px; font-size: 0.75rem; font-weight: 700; border: 1px solid transparent;
@@ -100,35 +96,34 @@
         align-items: center; color: #64748b; font-size: 0.875rem; font-weight: 500;
     }
 
-    /* Modales */
-    .modal-overlay {
-        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1050;
-    }
-    .modal-content {
-        background: #ffffff; padding: 2rem; border-radius: 12px; width: 100%; max-width: 450px;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0;
-    }
+    /* estilos de los modales y las notificaciones  */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1050; }
+    .modal-content { background: #ffffff; padding: 2rem; border-radius: 12px; width: 100%; max-width: 450px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; }
     .modal-content h3 { margin-top: 0; color: #0f172a; font-weight: 800; font-size: 1.25rem; margin-bottom: 1.5rem; }
     .form-group { margin-bottom: 1rem; }
     .form-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: #475569; font-size: 0.85rem;}
-    .form-group input, .form-group textarea, .form-group select {
-        width: 100%; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 8px;
-        font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: all 0.2s; box-sizing: border-box;
-    }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: all 0.2s; box-sizing: border-box; }
     .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
     .modal-acciones { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; }
-    
     .btn-cancelar { background-color: #f8fafc; color: #475569; border: 1px solid #e2e8f0; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; text-align: center;}
     .btn-cancelar:hover { background-color: #f1f5f9; }
-
-    .btn-danger-custom {
-        background-color: #ef4444; color: #ffffff; border: none; padding: 0.6rem 1.25rem;
-        border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; text-align: center;
-        box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2);
-    }
+    .btn-danger-custom { background-color: #ef4444; color: #ffffff; border: none; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; text-align: center; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2); }
     .btn-danger-custom:hover { background-color: #dc2626; }
+
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+    .toast-custom { display: flex; align-items: center; gap: 12px; min-width: 280px; max-width: 350px; padding: 14px 18px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); border-left: 4px solid transparent; font-family: 'Inter', sans-serif; animation: slideIn 0.3s ease forwards; transition: opacity 0.3s ease; }
+    .toast-success { border-left-color: #10b981; }
+    .toast-error { border-left-color: #ef4444; }
+    .toast-icon { font-size: 1.5rem; display: flex; align-items: center; }
+    .toast-success .toast-icon { color: #10b981; }
+    .toast-error .toast-icon { color: #ef4444; }
+    .toast-content { display: flex; flex-direction: column; }
+    .toast-title { font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 2px; }
+    .toast-message { font-size: 0.8rem; color: #64748b; line-height: 1.3; }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 </style>
+
+<div id="toast-container"></div>
 
 <div class="dashboard-premium">
     <div class="header-section">
@@ -141,8 +136,6 @@
         </button>
     </div>
 
-    <!-- Navegación -->
-    <!-- Agregamos un parámetro extra a la función que es el nombre en singular -->
     <div class="tabs-premium">
         <button id="tab-categorias" class="tab-btn active" onclick="cambiarModulo('categorias', 'Categoría', 'Nueva Categoría')">Categorías</button>
         <button id="tab-areas" class="tab-btn" onclick="cambiarModulo('areas', 'Área', 'Nueva Área')">Áreas</button>
@@ -175,7 +168,6 @@
             </tbody>
         </table>
 
-        <!-- Paginación -->
         <div class="table-footer">
             <span id="texto-paginacion">Página 1 de 1</span>
             <div style="display: flex; gap: 0.5rem;">
@@ -186,7 +178,6 @@
     </div>
 </div>
 
-<!-- Modal Principal (Crear/Editar) -->
 <div id="modal-formulario" class="modal-overlay">
     <div class="modal-content">
         <h3 id="modal-titulo">Crear Registro</h3>
@@ -222,7 +213,6 @@
     </div>
 </div>
 
-<!-- Modal de Eliminación (Sólo Lectura) -->
 <div id="modal-eliminar" class="modal-overlay">
     <div class="modal-content">
         <div style="text-align: center; margin-bottom: 1.5rem;">
@@ -233,7 +223,6 @@
             <p style="color: #64748b; font-size: 0.9rem; margin: 0;">¿Está seguro que desea borrar este registro del sistema? Esta acción no se puede deshacer.</p>
         </div>
         
-        <!-- Caja de Información a Borrar -->
         <div style="background: #f8fafc; padding: 1.25rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
             <p style="margin: 0 0 0.5rem 0; font-size: 0.85rem; color: #64748b;"><strong>ID del Registro:</strong> <span id="eliminar-id-text"></span></p>
             <p style="margin: 0 0 0.5rem 0; font-size: 0.85rem; color: #64748b;"><strong>Nombre:</strong> <span id="eliminar-nombre-text" style="color: #0f172a; font-weight: 700; font-size: 0.95rem;"></span></p>
@@ -248,17 +237,14 @@
 </div>
 
 <script>
-    const urlBase = 'http://localhost:8000/api';
+    const urlBase = '/api'; // URL Base dinamizada
     let moduloActual = 'categorias'; 
-    let moduloSingular = 'Categoría'; // Variable nueva para los títulos dinámicos
+    let moduloSingular = 'Categoría'; 
     let datosCompletos = [];
     let datosFiltrados = [];
     
-    // Variables de paginación
     let paginaActual = 1;
     const itemsPorPagina = 10;
-    
-    // Variable para la eliminación
     let idAEliminar = null;
 
     const estadosMap = {
@@ -269,9 +255,36 @@
         5: { texto: 'Descontinuado', clase: 'badge-5', icono: 'bxs-trash' }
     };
 
+    // *************************************************
+    // notificaciones tipo toast y funciones de manejo de módulos, carga de datos, filtrado y renderizado
+    // *************************************************
+    function mostrarToast(mensaje, tipo = 'success') {
+        const contenedor = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast-custom toast-${tipo}`;
+
+        const icono = tipo === 'success' ? 'bx-check-circle' : 'bx-error-circle';
+        const titulo = tipo === 'success' ? '¡Operación Exitosa!' : 'Atención';
+
+        toast.innerHTML = `
+            <div class="toast-icon"><i class='bx ${icono}'></i></div>
+            <div class="toast-content">
+                <span class="toast-title">${titulo}</span>
+                <span class="toast-message">${mensaje}</span>
+            </div>
+        `;
+
+        contenedor.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3500);
+    }
+
     function cambiarModulo(modulo, singular, textBoton) {
         moduloActual = modulo;
-        moduloSingular = singular; // Guardamos el nombre en singular (Categoría, Área, etc.)
+        moduloSingular = singular; 
 
         document.getElementById('btn-text').innerText = textBoton;
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -282,8 +295,7 @@
         document.getElementById('grupo-descripcion').style.display = esModuloEstado ? 'none' : 'block';
         document.getElementById('th-descripcion').style.display = esModuloEstado ? 'none' : 'table-cell';
         document.getElementById('th-estado').style.display = esModuloEstado ? 'none' : 'table-cell';
-        document.getElementById('grupo-estado').style.display = esModuloEstado ? 'none' : 'block';
-
+        
         cargarDatosDesdeAPI();
     }
 
@@ -297,7 +309,8 @@
             datosCompletos = await response.json();
             filtrarDatos(); 
         } catch (error) {
-            tbody.innerHTML = `<tr><td colspan="${esModuloEstado ? 2 : 4}" style="text-align:center; color:red;">Error de conexión con la API</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="${esModuloEstado ? 2 : 4}" style="text-align:center; color:red;">Error de conexión con el servidor</td></tr>`;
+            mostrarToast('No se pudieron cargar los datos.', 'error');
         }
     }
 
@@ -369,9 +382,7 @@
             fila += `
                 <td>
                     <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                        <!-- Pasamos los datos al modal Editar -->
                         <button class="btn-icon" onclick="abrirModalEditar(${item.id}, '${nom}', '${desc}', ${estadoId})"><i class='bx bx-edit-alt'></i></button>
-                        <!-- Abrimos el nuevo modal de Eliminar -->
                         <button class="btn-icon delete" onclick="abrirModalEliminar(${item.id}, '${nom}', '${desc}')"><i class='bx bx-trash'></i></button>
                     </div>
                 </td>
@@ -401,14 +412,16 @@
         }
     }
 
-    // ================== LOGICA MODAL CREAR/EDITAR ==================
+    //  MODAL CREAR/EDITAR 
     function abrirModalCrear() {
         document.getElementById('registro-id').value = '';
         document.getElementById('registro-nombre').value = '';
         document.getElementById('registro-descripcion').value = '';
         document.getElementById('registro-estado').value = '1';
         
-        // El título cambia dinámicamente según la pestaña seleccionada
+        // ocultamos el campo de estado al crear, ya que por defecto se asignará "Activo" (Excepto si es la pestaña de Estados, que no lo usa)
+        document.getElementById('grupo-estado').style.display = 'none';
+
         document.getElementById('modal-titulo').innerText = 'Crear Nueva ' + moduloSingular;
         document.getElementById('modal-formulario').style.display = 'flex';
     }
@@ -419,7 +432,9 @@
         document.getElementById('registro-descripcion').value = descripcion;
         document.getElementById('registro-estado').value = estado_id || 1;
         
-        // El título cambia dinámicamente
+        // mostramos el estado al editar (Excepto si es la pestaña de Estados, que no lo usa)
+        document.getElementById('grupo-estado').style.display = (moduloActual === 'estados') ? 'none' : 'block';
+
         document.getElementById('modal-titulo').innerText = 'Editar ' + moduloSingular + ' #' + id;
         document.getElementById('modal-formulario').style.display = 'flex';
     }
@@ -430,7 +445,7 @@
 
     // ================== LOGICA MODAL ELIMINAR ==================
     function abrirModalEliminar(id, nombre, descripcion) {
-        idAEliminar = id; // Guardamos el ID globalmente para borrarlo después
+        idAEliminar = id; 
         
         document.getElementById('modal-eliminar-titulo').innerText = 'Eliminar ' + moduloSingular;
         document.getElementById('eliminar-id-text').innerText = '#' + id;
@@ -448,27 +463,10 @@
 
     function cerrarModalEliminar() {
         document.getElementById('modal-eliminar').style.display = 'none';
-        idAEliminar = null; // Limpiamos la variable
+        idAEliminar = null; 
     }
 
-    async function confirmarEliminacion() {
-        if(!idAEliminar) return;
-
-        try {
-            const response = await fetch(`${urlBase}/${moduloActual}/eliminar/${idAEliminar}`, { method: 'DELETE' });
-            if (response.ok) {
-                cerrarModalEliminar();
-                cargarDatosDesdeAPI();
-            } else {
-                alert('No se pudo eliminar. Verifique que no esté siendo utilizado en el inventario.');
-                cerrarModalEliminar();
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-
-    // ================== GUARDAR DATOS ==================
+    // cosumo de apis para crear/editar y eliminar registros
     async function guardarRegistro(event) {
         event.preventDefault(); 
         const id = document.getElementById('registro-id').value;
@@ -493,12 +491,33 @@
 
             if (response.ok) {
                 cerrarModal();
+                mostrarToast(id ? `${moduloSingular} actualizado con éxito.` : `${moduloSingular} registrado correctamente.`, 'success');
                 cargarDatosDesdeAPI(); 
             } else {
-                alert('Error al guardar. Verifique los datos o posibles duplicados.');
+                mostrarToast('Error al guardar. Verifique los datos o posibles duplicados.', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
+            mostrarToast('Ocurrió un error inesperado.', 'error');
+        }
+    }
+
+    async function confirmarEliminacion() {
+        if(!idAEliminar) return;
+
+        try {
+            const response = await fetch(`${urlBase}/${moduloActual}/eliminar/${idAEliminar}`, { method: 'DELETE' });
+            if (response.ok) {
+                cerrarModalEliminar();
+                mostrarToast(`${moduloSingular} eliminado exitosamente.`, 'success');
+                cargarDatosDesdeAPI();
+            } else {
+                mostrarToast('No se pudo eliminar. Verifique que no esté siendo utilizado en el inventario.', 'error');
+                cerrarModalEliminar();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            mostrarToast('Error de red al intentar borrar.', 'error');
         }
     }
 
