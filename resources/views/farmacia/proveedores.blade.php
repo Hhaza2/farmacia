@@ -5,7 +5,6 @@
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <style>
-    /* TU CSS ORIGINAL INTACTO */
     .dashboard-premium { font-family: 'Inter', sans-serif; padding: 2.5rem 3.5rem; background-color: #f8fafc; min-height: 85vh; -webkit-font-smoothing: auto; }
     .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
     .title-wrapper h1 { font-size: 1.85rem; font-weight: 700; color: #0f172a; letter-spacing: -0.03em; margin: 0; }
@@ -65,6 +64,12 @@
     .toast-title { font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 2px; }
     .toast-message { font-size: 0.8rem; color: #64748b; line-height: 1.3; }
     @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* FILTRO DROPDOWN */
+    .filter-wrapper { position: relative; }
+    .filter-dropdown { display: none; position: absolute; right: 0; top: 110%; background: white; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); width: 180px; z-index: 100; }
+    .filter-dropdown button { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; border: none; background: none; font-size: 0.85rem; color: #475569; cursor: pointer; transition: 0.2s; }
+    .filter-dropdown button:hover { background: #f8fafc; color: #0f172a; font-weight: 600; }
 </style>
 
 <div id="toast-container"></div>
@@ -87,7 +92,18 @@
                 <input type="text" id="inputBuscarProveedor" placeholder="Buscar proveedor por nombre, email o teléfono..." oninput="filtrarDatos()">
             </div>
             <div style="display: flex; gap: 0.75rem;">
-                <button class="btn-secondary"><i class='bx bx-filter-alt'></i> Filtros</button>
+                <div class="filter-wrapper">
+                    <button class="btn-secondary" onclick="document.getElementById('filter-dropdown-proveedores').style.display = (document.getElementById('filter-dropdown-proveedores').style.display === 'block' ? 'none' : 'block')">
+                        <i class='bx bx-filter-alt'></i> Filtro: <span id="filtro-actual">Todo</span>
+                    </button>
+                    <div id="filter-dropdown-proveedores" class="filter-dropdown">
+                        <button onclick="setFiltro('todo', 'Todo')">Todo</button>
+                        <button onclick="setFiltro('nombre', 'Nombre')">Nombre</button>
+                        <button onclick="setFiltro('email', 'Correo')">Correo</button>
+                        <button onclick="setFiltro('telefono', 'Teléfono')">Teléfono</button>
+                        <button onclick="setFiltro('estado', 'Estado')">Estado</button>
+                    </div>
+                </div>
                 <button class="btn-secondary"><i class='bx bx-export'></i> Exportar</button>
             </div>
         </div>
@@ -198,9 +214,9 @@
     const itemsPorPagina = 10;
     let idAEliminar = null;
 
-    // ==========================================
-    // FORMATEO AUTOMÁTICO DE TELÉFONO
-    // ==========================================
+    let filtroActivo = 'todo';
+
+    // dormateo inteligente para teléfono: ####-####
     function formatearTelefono(input) {
         // Quitamos cualquier letra o caracter que no sea número
         let valor = input.value.replace(/\D/g, '');
@@ -219,9 +235,7 @@
         input.value = valor;
     }
 
-    // ==========================================
-    // SISTEMA DE NOTIFICACIONES (TOAST)
-    // ==========================================
+    // notificaciones tipo toast
     function mostrarToast(mensaje, tipo = 'success') {
         const contenedor = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -259,13 +273,32 @@
         }
     }
 
+    function setFiltro(tipo, nombre) {
+        filtroActivo = tipo;
+        document.getElementById('filtro-actual').innerText = nombre;
+        document.getElementById('filter-dropdown-proveedores').style.display = 'none';
+        filtrarDatos();
+    }
+
     function filtrarDatos() {
         const termino = document.getElementById('inputBuscarProveedor').value.toLowerCase();
+        
         proveedoresFiltrados = proveedoresCompletos.filter(p => {
             const nombre = (p.nombre || '').toLowerCase();
             const email = (p.email || '').toLowerCase();
             const telefono = (p.telefono || '').toLowerCase();
-            return nombre.includes(termino) || email.includes(termino) || telefono.includes(termino);
+            const nombreEstado = (p.estado ? p.estado.nombre : 'desconocido').toLowerCase();
+
+            if (filtroActivo === 'todo') {
+                return nombre.includes(termino) || email.includes(termino) || 
+                    telefono.includes(termino) || nombreEstado.includes(termino);
+            }
+            if (filtroActivo === 'nombre') return nombre.includes(termino);
+            if (filtroActivo === 'email') return email.includes(termino);
+            if (filtroActivo === 'telefono') return telefono.includes(termino);
+            if (filtroActivo === 'estado') return nombreEstado.includes(termino);
+            
+            return false;
         });
 
         paginaActual = 1; 
