@@ -234,7 +234,6 @@
             <a href="#">Despacho de Recetas</a>
             <a href="{{ route('alertas.index') }}">Alertas</a>
             <a href="{{ route('inventario.lotes.index') }}">Lotes</a>
-            <a href="{{ route('inventario.lotes.create') }}">Nuevo Lote</a>
             <a href="{{ route('inventario.movimientos.historial') }}">Historial Movimientos</a>
 
             @elseif(Auth::user()->role_id === 3)
