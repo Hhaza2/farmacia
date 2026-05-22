@@ -17,7 +17,7 @@ Para garantizar la escalabilidad, modularidad y seguridad exigidas por el entorn
 
 * **Lenguaje de Programación:** PHP 8.2.12
 * **Framework de Desarrollo:** Laravel 12.58.0 (Arquitectura MVC y motor de plantillas Blade)
-* **Gestor de Base de Datos:** MySQL / SQL Server (Esquema relacional con integridad referencial estricta)
+* **Gestor de Base de Datos:** MySQL
 * **Estilizado y UI:** Bootstrap 5 (Estructura responsiva basada en flexbox)
 * **Control de Versiones:** Git & GitHub
 
@@ -38,7 +38,7 @@ El flujo de trabajo se estructuró en ciclos iterativos de incremento rápido de
 ---
 
 ## Gestión de Requerimientos y Planificación de Sprints
-Todos los requerimientos funcionales e ingenieriles se tradujeron directamente en el tablero de gestión bajo la estructura de **Historias de Usuario (con formato Connextra: *Como, Quiero, Para*), Tareas Técnicas y Bugs**. 
+Todos los requerimientos funcionales e ingenieriles se tradujeron directamente en el tablero de gestión bajo la estructura de **Historias de Usuario (con formato: *Como, Quiero, Para*), Tareas Técnicas y Bugs**. 
 
 La carga de trabajo se distribuyó de manera equivalente mediante la estimación en **Story Points** (basada en la escala de Fibonacci), dividiendo el proyecto en 5 Sprints estratégicos:
 
@@ -54,4 +54,4 @@ La carga de trabajo se distribuyó de manera equivalente mediante la estimación
 El repositorio refleja una cultura de colaboración e ingeniería de software madura, caracterizada por:
 
 * **Historial de Trabajo Sostenido:** Un flujo de desarrollo continuo y distribuido con un historial de cambios que supera de forma holgada las **2 semanas mínimas de trabajo exigidas**, evidenciando constancia diaria y descartando cargas masivas de última hora.
-* **Estrategia de Ramas (GitFlow Adaptado):** Aislamiento de características mediante ramas de desarrollo (*feature branches*), lo que propició revisiones de código cruzadas y la resolución sistemática de conflictos de combinación (*merge conflicts*) antes de impactar la rama principal de producción.
+* **Estrategia de Ramas:** Aislamiento de características mediante ramas de desarrollo, lo que propició revisiones de código cruzadas y la resolución sistemática de conflictos de combinación (*merge conflicts*) antes de impactar la rama principal de producción.
