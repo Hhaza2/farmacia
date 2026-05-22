@@ -7,8 +7,8 @@ A continuación se detallan los miembros del equipo de desarrollo, junto con el 
 | :--- | :--- | :--- |
 | **Levi Ramos** | Product Owner / DevOps Engineer | Gestión del ciclo de vida en GitHub, inicialización del entorno, integración continua, seguridad de accesos y resolución de excepciones globales. |
 | **Katherine Álvarez** | Scrum Master / UI-UX Developer | Moderación de ceremonias ágiles, diseño de interfaces responsivas, interacción de catálogos y maquetación de componentes del Dashboard principal. |
-| **Daniel Martínez** | Backend Developer / Database Administrator | Diseño del esquema relacional de la base de datos, optimización de consultas, control de lotes y lógica transaccional de movimientos de inventario. |
-| **Ángel Mercado** | Backend Developer / QA Engineer | Implementación del motor matemático de alertas, generación y exportación de reportes operativos a PDF y diseño de pruebas de validación. |
+| **Daniela Martínez** | Backend Developer / Database Administrator | Diseño del esquema relacional de la base de datos, optimización de consultas, control de lotes y lógica transaccional de movimientos de inventario. |
+| **Marcela Peña** | Backend Developer / QA Engineer | Implementación del motor matemático de alertas, generación y exportación de reportes operativos a PDF y diseño de pruebas de validación. |
 
 ---
 
