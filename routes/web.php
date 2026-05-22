@@ -48,13 +48,23 @@ Route::middleware('auth')->group(function () {
     // --------------------------------------------------------
     Route::middleware('role:1')->prefix('admin')->group(function () {
         
-        Route::get('/dashboard', function () {
+Route::get('/dashboard', function () {
+            // Contamos los registros reales en la base de datos
             $totalUsuarios = \App\Models\User::count();
             $totalProveedores = \App\Models\Proveedor::count();
             $totalInsumos = \App\Models\Insumo::count();
-            $totalAlertas = \App\Models\Alerta::count();
             
-            return view('admin.index', compact('totalUsuarios', 'totalProveedores', 'totalInsumos', 'totalAlertas'));
+            $totalAlertas = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->count();
+
+            $alertasRecientes = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->orderBy('created_at', 'desc')
+                                ->take(5)
+                                ->get();
+
+            return view('admin.index', compact('totalUsuarios', 'totalProveedores', 'totalInsumos', 'totalAlertas', 'alertasRecientes'));
         })->name('admin.dashboard');
 
         // Protegido estrictamente solo para el Admin
@@ -90,12 +100,29 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:2')->prefix('farmacia')->group(function () {
         
       Route::get('/dashboard', function () {
+            // Contamos los registros reales
             $totalInsumos = \App\Models\Insumo::count();
             $totalProveedores = \App\Models\Proveedor::count();
-            $stockCritico = 0; 
-            $alertasPendientes = 0;
+            
+            // 1. Contamos SOLO las alertas NO leídas (leida = 0)
+            $alertasPendientes = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->count();
+                                
+            // 2. Extra: Filtramos cuántas de esas alertas son de "stock crítico"
+            $stockCritico = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->where('tipo', 'stock_bajo')
+                                ->count();
 
-            return view('farmacia.index', compact('totalInsumos', 'totalProveedores', 'stockCritico', 'alertasPendientes'));
+            // 3. Traemos las últimas 5 alertas NO leídas para la lista lateral
+            $alertasRecientes = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->orderBy('created_at', 'desc')
+                                ->take(5)
+                                ->get();
+
+            return view('farmacia.index', compact('totalInsumos', 'totalProveedores', 'stockCritico', 'alertasPendientes', 'alertasRecientes'));
         })->name('farmacia.dashboard');
         
     });
