@@ -16,7 +16,7 @@ class StoreLoteRequest extends FormRequest
     {
         return [
             'codigo_lote'       => 'required|string|min:4|max:50|unique:lotes,codigo_lote',
-            'insumo_id'         => 'required|exists:insumos,id',
+            'ubicacion_id'      => 'nullable|exists:ubicaciones,id', 
             'cantidad_inicial'  => 'required|integer|min:1|max:999999',
             'fecha_vencimiento' => 'required|date|after:today',
             'proveedor_id'      => 'nullable|exists:proveedores,id',
@@ -32,6 +32,7 @@ class StoreLoteRequest extends FormRequest
             'codigo_lote.unique'         => 'Este código de lote ya existe.',
             'insumo_id.required'         => 'Debe seleccionar un insumo.',
             'insumo_id.exists'           => 'El insumo seleccionado no es válido.',
+            'ubicacion_id.exists'        => 'La ubicación seleccionada no es válida.',
             'cantidad_inicial.required'  => 'La cantidad es obligatoria.',
             'cantidad_inicial.integer'   => 'La cantidad debe ser un número entero.',
             'cantidad_inicial.min'       => 'La cantidad mínima es 1.',

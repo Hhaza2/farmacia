@@ -22,6 +22,7 @@
                 <div class="card-body">
                     <p><strong>Código:</strong> {{ $lote->codigo_lote }}</p>
                     <p><strong>Insumo:</strong> {{ $lote->insumo->nombre ?? 'N/A' }}</p>
+                    <p><strong>Ubicación:</strong> {{ $lote->ubicacion->nombre ?? 'No especificada' }}</p>  
                     <p><strong>Proveedor:</strong> {{ $lote->proveedor ?? 'No especificado' }}</p>
                     <p><strong>Fecha Entrada:</strong> {{ $lote->fecha_entrada->format('d/m/Y') }}</p>
                     <p><strong>Fecha Vencimiento:</strong>

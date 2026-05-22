@@ -1,12 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AlertaController;
-use App\Http\Controllers\Inventario\LoteController;        
-use App\Http\Controllers\Inventario\MovimientoController;
+use App\Http\Controllers\AlertaController;        
+use App\Http\Controllers\Inventario\LoteController;
 // Rutas para usuarios NO autenticados (guest)
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Inventario\MovimientoController;
 
 // ========================================================
 // RUTAS PARA USUARIOS NO AUTENTICADOS (GUEST)
@@ -141,4 +141,4 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
-});
+
