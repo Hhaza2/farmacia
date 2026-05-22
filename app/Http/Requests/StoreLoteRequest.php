@@ -16,6 +16,7 @@ class StoreLoteRequest extends FormRequest
     {
         return [
             'codigo_lote'       => 'required|string|min:4|max:50|unique:lotes,codigo_lote',
+            'insumo_id'         => 'required|exists:insumos,id',
             'ubicacion_id'      => 'nullable|exists:ubicaciones,id', 
             'cantidad_inicial'  => 'required|integer|min:1|max:999999',
             'fecha_vencimiento' => 'required|date|after:today',

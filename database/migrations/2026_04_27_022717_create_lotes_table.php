@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('cantidad_inicial');
             $table->integer('cantidad_actual');
             $table->date('fecha_entrada');
-            $table->string('proveedor');
             $table->date('fecha_vencimiento')->nullable();
             $table->enum('estado', ['activo', 'agotado', 'vencido'])->default('activo');
             $table->foreignId('registrado_por')->constrained('users');

@@ -9,7 +9,7 @@ class Movimiento extends Model
 {
     protected $fillable = [
         'lote_id', 'tipo', 'cantidad',
-        'motivo', 'referencia', 'usuario_id',
+        'motivo', 'referencia', 'user_id',
     ];
 
     public function lote(): BelongsTo
@@ -19,6 +19,6 @@ class Movimiento extends Model
 
     public function usuario(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

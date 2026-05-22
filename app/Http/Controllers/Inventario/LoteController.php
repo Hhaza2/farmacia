@@ -90,8 +90,8 @@ class LoteController extends Controller implements HasMiddleware
                 'lote_id'    => $lote->id,
                 'tipo'       => 'entrada',
                 'cantidad'   => $request->cantidad_inicial,
-                'motivo'     => 'Registro inicial de lote',
-                'usuario_id' => Auth::id(),
+                'motivo'     => 'ajuste',
+                'user_id' => Auth::id(),
             ]);
         });
 
