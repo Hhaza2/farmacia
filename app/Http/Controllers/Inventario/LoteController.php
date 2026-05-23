@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Inventario;
 use App\Models\Lote;
 use App\Models\Insumo;
 use App\Models\Proveedor;
+use App\Models\Ubicacion;
 use App\Models\Movimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class LoteController extends Controller implements HasMiddleware
 
     public function index(Request $request)
     {
-        $query = Lote::with(['insumo', 'registrador'])
+        $query = Lote::with(['insumo', 'registrador', 'ubicacion'])
             ->orderBy('fecha_vencimiento');
 
         // Filtro por código de lote
@@ -37,6 +38,11 @@ class LoteController extends Controller implements HasMiddleware
         // Filtro por insumo
         if ($request->filled('insumo_id')) {
             $query->where('insumo_id', $request->insumo_id);
+        }
+
+        // Filtro por ubicación
+        if ($request->filled('ubicacion_id')) {
+            $query->where('ubicacion_id', $request->ubicacion_id);
         }
 
         // Filtro por estado
@@ -55,17 +61,19 @@ class LoteController extends Controller implements HasMiddleware
             };
         }
 
-        $insumos = Insumo::orderBy('nombre')->get();
-        $lotes   = $query->paginate(15)->withQueryString();
+        $insumos     = Insumo::orderBy('nombre')->get();
+        $ubicaciones = Ubicacion::orderBy('nombre')->get();
+        $lotes       = $query->paginate(15)->withQueryString();
 
-        return view('inventario.lotes.index', compact('lotes', 'insumos'));
+        return view('inventario.lotes.index', compact('lotes', 'insumos', 'ubicaciones'));
     }
 
     public function create()
     {
-        $insumos = Insumo::orderBy('nombre')->get();
+        $insumos     = Insumo::orderBy('nombre')->get();
         $proveedores = Proveedor::orderBy('nombre')->get();
-        return view('inventario.lotes.create', compact('insumos', 'proveedores'));
+        $ubicaciones = Ubicacion::orderBy('nombre')->get();
+        return view('inventario.lotes.create', compact('insumos', 'proveedores', 'ubicaciones'));
     }
 
     public function store(StoreLoteRequest $request)
@@ -82,8 +90,8 @@ class LoteController extends Controller implements HasMiddleware
                 'lote_id'    => $lote->id,
                 'tipo'       => 'entrada',
                 'cantidad'   => $request->cantidad_inicial,
-                'motivo'     => 'Registro inicial de lote',
-                'usuario_id' => Auth::id(),
+                'motivo'     => 'ajuste',
+                'user_id' => Auth::id(),
             ]);
         });
 
@@ -93,7 +101,7 @@ class LoteController extends Controller implements HasMiddleware
 
     public function show(Lote $lote)
     {
-        $lote->load(['insumo', 'movimientos.usuario', 'registrador']);
+        $lote->load(['insumo', 'movimientos.usuario', 'registrador', 'ubicacion']);
         return view('inventario.lotes.show', compact('lote'));
     }
 }

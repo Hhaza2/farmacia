@@ -277,6 +277,19 @@
             </select>
         </div>
 
+        {{-- Por ubicación --}}
+        <div class="filter-group">
+            <label>Ubicación</label>
+            <select name="ubicacion_id" class="filter-input">
+                <option value="">Todas</option>
+                @foreach($ubicaciones as $ubicacion)
+                    <option value="{{ $ubicacion->id }}" {{ request('ubicacion_id') == $ubicacion->id ? 'selected' : '' }}>
+                        {{ $ubicacion->nombre }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         {{-- Por estado --}}
         <div class="filter-group">
             <label>Estado</label>
@@ -304,7 +317,7 @@
             <button type="submit" class="btn-filter">
                 <i class="fa-solid fa-magnifying-glass"></i> Filtrar
             </button>
-            @if(request()->hasAny(['search', 'estado', 'insumo_id', 'vencimiento']))
+            @if(request()->hasAny(['search', 'estado', 'insumo_id', 'ubicacion_id', 'vencimiento']))
                 <a href="{{ route('inventario.lotes.index') }}" class="btn-clear">
                     <i class="fa-sharp fa-light fa-filter-circle-xmark"></i>
                 </a>
@@ -314,7 +327,7 @@
     </form>
 
     {{-- Resumen de resultados --}}
-    @if(request()->hasAny(['search', 'estado', 'insumo_id', 'vencimiento']))
+    @if(request()->hasAny(['search', 'estado', 'insumo_id', 'ubicacion_id', 'vencimiento']))
         <p class="filter-summary">
             Mostrando <strong>{{ $lotes->total() }}</strong> resultado(s) con los filtros aplicados.
         </p>
@@ -327,6 +340,7 @@
             <tr>
                 <th>Lote</th>
                 <th>Insumo</th>
+                <th>Ubicación</th>
                 <th>Stock</th>
                 <th>Vencimiento</th>
                 <th>Estado</th>
@@ -339,6 +353,7 @@
             <tr>
                 <td><span class="code">{{ $lote->codigo_lote }}</span></td>
                 <td>{{ $lote->insumo->nombre ?? 'N/A' }}</td>
+                <td>{{ $lote->ubicacion->nombre ?? '—' }}</td>
                 <td><strong>{{ $lote->cantidad_actual }}</strong></td>
                 <td>{{ $lote->fecha_vencimiento->format('d/m/Y') }}</td>
                 <td>

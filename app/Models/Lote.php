@@ -6,29 +6,33 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
 class Lote extends Model
 {
     protected $fillable = [
-        'codigo_lote',
-        'codigo_producto',
-        'insumo_id',
-        'cantidad_inicial',
-        'cantidad_actual',
-        'fecha_vencimiento',
-        'fecha_entrada',
-        'proveedor',
-        'estado',
-        'registrado_por',
+        'codigo_lote', 'insumo_id', 'cantidad_inicial', 'ubicacion_id',
+        'cantidad_actual', 'fecha_vencimiento', 'fecha_entrada',
+        'proveedor_id', 'estado', 'registrado_por',
     ];
 
     protected $casts = [
         'fecha_vencimiento' => 'date',
         'fecha_entrada'     => 'date',
     ];
-    
+
     public function insumo(): BelongsTo
     {
         return $this->belongsTo(Insumo::class);
+    }
+    
+        public function ubicacion(): BelongsTo
+    {
+        return $this->belongsTo(Ubicacion::class);
+    }
+
+    public function proveedor(): BelongsTo
+    {
+        return $this->belongsTo(Proveedor::class);
     }
 
     public function movimientos(): HasMany

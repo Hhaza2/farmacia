@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AlertaController;
 use App\Http\Controllers\ReporteController;
@@ -208,4 +208,19 @@ Route::middleware('auth')->group(function () {
         Route::get('historial', [MovimientoController::class, 'historial'])
             ->name('movimientos.historial');
     });
+
+        Route::get('/admin/proveedores', function () {
+        return view('farmacia.proveedores');
+    });
+
+    Route::get('/admin/insumos', function () {
+        return view('farmacia.insumos'); 
+    })->name('insumos.index');
+    
+    Route::middleware(['auth', 'role:1'])->group(function () {
+        Route::get('/admin/configuraciones', function () {
+            return view('admin.configuraciones');
+        });
+    });
 });
+

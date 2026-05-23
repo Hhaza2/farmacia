@@ -14,7 +14,7 @@
             <p>Registro de inventario con control de trazabilidad</p>
         </div>
 
-        <!-- Errores -->
+        <!-- Errores generales -->
         @if($errors->any())
             <div class="alert-custom">
                 <strong>Error:</strong>
@@ -30,17 +30,33 @@
         <form action="{{ route('inventario.lotes.store') }}" method="POST">
             @csrf
 
-            <!-- Código -->
+            <!-- Código de Lote -->
             <div class="form-group">
                 <label>Código de Lote</label>
                 <input type="text" name="codigo_lote" value="{{ old('codigo_lote') }}" placeholder="LOTE-2026-001" required>
+            </div>
+
+            <!-- Ubicación -->
+            <div class="form-group">
+                <label for="ubicacion_id">Ubicación</label>
+                <select name="ubicacion_id" id="ubicacion_id">
+                        <option value="">Seleccione una ubicación</option>
+                        @foreach($ubicaciones as $ubicacion)
+                            <option value="{{ $ubicacion->id }}" {{ old('ubicacion_id') == $ubicacion->id ? 'selected' : '' }}>
+                                {{ $ubicacion->nombre }}
+                            </option>
+                        @endforeach
+                </select>
+                @error('ubicacion_id')
+                    <span class="error-message">{{ $message }}</span>
+                @enderror
             </div>
 
             <!-- Insumo -->
             <div class="form-group">
                 <label>Insumo</label>
                 <select name="insumo_id" required>
-                    <option value=""disabled selected>Seleccione un insumo</option>
+                    <option value="" disabled selected>Seleccione un insumo</option>
                     @foreach($insumos as $insumo)
                         <option value="{{ $insumo->id }}">{{ $insumo->nombre }}</option>
                     @endforeach
@@ -147,6 +163,14 @@
 .form-group input:focus,
 .form-group select:focus {
     border-color: #2a5298;
+}
+
+/* Mensajes de error por campo */
+.error-message {
+    font-size: 0.75rem;
+    color: #dc3545;
+    margin-top: 4px;
+    display: block;
 }
 
 /* Row */

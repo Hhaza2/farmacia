@@ -69,7 +69,7 @@ class MovimientoController extends Controller implements HasMiddleware
                 'cantidad'   => $cantidad,
                 'motivo'     => $request->motivo,
                 'referencia' => $request->referencia,
-                'usuario_id' => Auth::id(),
+                'user_id' => Auth::id(),
             ]);
 
             if ($tipo === 'entrada') {
