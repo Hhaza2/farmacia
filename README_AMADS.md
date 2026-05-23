@@ -1,4 +1,4 @@
-# Sistema de Gestión de Inventario y Trazabilidad de Insumos Médicos
+# SISTEMA DE GESTIÓN DE FARMACIA HOSPITALARIA E INVENTARIO CRÍTICO
 
 ## Integrantes del Grupo
 A continuación se detallan los miembros del equipo de desarrollo, junto con el rol estratégico y operativo desempeñado a lo largo del ciclo de vida del proyecto:
