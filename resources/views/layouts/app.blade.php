@@ -251,7 +251,7 @@
                 padding: 1.5rem;
                 box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
                 border-top: 1px solid #e2e8f0;
-                gap: 1rem;
+                gap: 0.5rem;
                 align-items: stretch;
             }
 
@@ -259,35 +259,50 @@
                 display: flex;
             }
 
+            /* alineamos todo el bloque de links a la izquierda */
             .nav-links {
                 flex-direction: column;
                 width: 100%;
+                align-items: flex-start; 
             }
 
             .nav-links a {
                 width: 100%;
                 padding: 0.8rem 1rem;
                 font-size: 0.95rem;
+                justify-content: flex-start; 
             }
 
+            /* aquí corregimos el centrado fantasma del dropdown */
             .nav-dropdown {
                 flex-direction: column;
                 width: 100%;
+                align-items: flex-start; 
             }
 
             .nav-dropdown-btn {
                 width: 100%;
                 padding: 0.8rem 1rem;
                 font-size: 0.95rem;
+                justify-content: flex-start; 
             }
 
+            /* le damos un margen sutil para que se note que es un sub-menú */
             .nav-dropdown-menu {
                 position: static;
                 box-shadow: none;
                 border: none;
-                border-left: 3px solid #e2e8f0;
+                border-left: 2px solid #e2e8f0;
                 border-radius: 0;
-                margin-left: 1rem;
+                margin-left: 1.5rem; 
+                margin-top: 0.2rem;
+                width: calc(100% - 1.5rem);
+                padding-bottom: 0.5rem;
+            }
+
+            .nav-dropdown-menu a {
+                padding: 0.6rem 1rem;
+                justify-content: flex-start;
             }
 
             .user-menu {
@@ -296,10 +311,13 @@
                 border-top: 1px solid #e2e8f0;
                 padding-top: 1rem;
                 gap: 1rem;
+                align-items: flex-start; 
             }
 
             .user-greeting {
-                justify-content: center;
+                width: 100%;
+                justify-content: flex-start; 
+                padding-left: 1rem;
             }
 
             .logout-btn {
@@ -308,12 +326,6 @@
                 padding: 0.8rem;
                 font-size: 0.95rem;
             }
-            .nav-wrapper.active { display: flex; }
-            .nav-links { flex-direction: column; width: 100%; }
-            .nav-links a { width: 100%; padding: 0.8rem 1rem; font-size: 0.95rem; }
-            .user-menu { flex-direction: column; width: 100%; border-top: 1px solid #e2e8f0; padding-top: 1rem; gap: 1rem; }
-            .user-greeting { justify-content: center; }
-            .logout-btn { width: 100%; justify-content: center; padding: 0.8rem; font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -333,27 +345,37 @@
         <div class="nav-wrapper" id="nav-wrapper">
             <div class="nav-links">
 
+                {{-- MENU ADMINISTRADOR (Rol 1) --}}
+
                 @if(Auth::user()->role_id === 1)
+                
                 <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active-link' : '' }}">
-                    <i class='bx bx-home-alt'></i> Inicio Admin
-                </a>
-                <a href="#" class="{{ request()->is('admin/usuarios*') ? 'active-link' : '' }}">
-                    <i class='bx bx-group'></i> Usuarios
-                </a>
-                <a href="{{ url('/admin/proveedores') }}" class="{{ request()->is('admin/proveedores*') ? 'active-link' : '' }}">
-                    <i class='bx bxs-truck'></i> Proveedores
-                </a>
-                <a href="{{ url('/admin/insumos') }}" class="{{ request()->is('admin/insumos*') ? 'active-link' : '' }}">
-                    <i class='bx bx-box'></i> Insumos
-                </a>
-                <a href="{{ route('inventario.lotes.index') }}" class="{{ request()->is('inventario/lotes*') ? 'active-link' : '' }}">
-                    <i class='bx bx-layer'></i> Lotes
-                </a>
-                <a href="{{ route('inventario.movimientos.historial') }}" class="{{ request()->is('inventario/movimientos*') ? 'active-link' : '' }}">
-                    <i class='bx bx-transfer'></i> Movimientos
+                    <i class='bx bx-home-alt'></i> Inicio
                 </a>
 
-                {{-- Dropdown Alertas y Reportes --}}
+                {{-- Dropdown: Gestión de Inventario --}}
+                <div class="nav-dropdown" id="dropdown-inventario-admin">
+                    <button class="nav-dropdown-btn {{ request()->is('admin/insumos*') || request()->is('admin/proveedores*') || request()->is('inventario*') ? 'active-dropdown' : '' }}"
+                        onclick="toggleDropdown('dropdown-inventario-admin')">
+                        <i class='bx bx-box'></i> Inventario <i class='bx bx-chevron-down'></i>
+                    </button>
+                    <div class="nav-dropdown-menu">
+                        <a href="{{ url('/admin/insumos') }}" class="{{ request()->is('admin/insumos*') ? 'active-link' : '' }}">
+                            <i class='bx bx-plus-medical'></i> Insumos
+                        </a>
+                        <a href="{{ url('/admin/proveedores') }}" class="{{ request()->is('admin/proveedores*') ? 'active-link' : '' }}">
+                            <i class='bx bxs-truck'></i> Proveedores
+                        </a>
+                        <a href="{{ route('inventario.lotes.index') }}" class="{{ request()->is('inventario/lotes*') ? 'active-link' : '' }}">
+                            <i class='bx bx-layer'></i> Lotes
+                        </a>
+                        <a href="{{ route('inventario.movimientos.historial') }}" class="{{ request()->is('inventario/movimientos*') ? 'active-link' : '' }}">
+                            <i class='bx bx-transfer'></i> Movimientos
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Dropdown: Alertas y Reportes (Intacto) --}}
                 <div class="nav-dropdown" id="dropdown-alertas-reportes">
                     <button class="nav-dropdown-btn {{ request()->is('alertas*') || request()->is('reportes*') ? 'active-dropdown' : '' }}"
                         onclick="toggleDropdown('dropdown-alertas-reportes')">
@@ -375,11 +397,26 @@
                     </div>
                 </div>
 
-                <a href="{{ url('/admin/configuraciones') }}" class="{{ request()->is('admin/configuraciones*') ? 'active-link' : '' }}">
-                    <i class='bx bx-cog'></i> Configuraciones
-                </a>
+                {{-- Dropdown: Configuración del Sistema --}}
+                <div class="nav-dropdown" id="dropdown-sistema-admin">
+                    <button class="nav-dropdown-btn {{ request()->is('admin/usuarios*') || request()->is('admin/configuraciones*') ? 'active-dropdown' : '' }}"
+                        onclick="toggleDropdown('dropdown-sistema-admin')">
+                        <i class='bx bx-cog'></i> Sistema <i class='bx bx-chevron-down'></i>
+                    </button>
+                    <div class="nav-dropdown-menu">
+                        <a href="{{ url('/admin/usuarios') }}" class="{{ request()->is('admin/usuarios*') ? 'active-link' : '' }}">
+                            <i class='bx bx-group'></i> Usuarios
+                        </a>
+                        <a href="{{ url('/admin/configuraciones') }}" class="{{ request()->is('admin/configuraciones*') ? 'active-link' : '' }}">
+                            <i class='bx bx-wrench'></i> Configuraciones
+                        </a>
+                    </div>
+                </div>
+
+                {{-- MENU FARMACIA (Rol 2) --}}
 
                 @elseif(Auth::user()->role_id === 2)
+                
                 <a href="{{ route('farmacia.dashboard') }}" class="{{ request()->is('farmacia/dashboard') ? 'active-link' : '' }}">
                     <i class='bx bx-home-alt'></i> Inicio Farmacia
                 </a>
@@ -418,12 +455,12 @@
                     </div>
                 </div>
 
+                {{-- MENU ENFERMERIA (Rol 3) --}}
+
                 @elseif(Auth::user()->role_id === 3)
+                
                 <a href="{{ route('enfermeria.dashboard') }}" class="{{ request()->is('enfermeria/dashboard') ? 'active-link' : '' }}">
                     <i class='bx bx-home-alt'></i> Inicio Enfermería
-                </a>
-                <a href="#" class="{{ request()->is('enfermeria/pacientes*') ? 'active-link' : '' }}">
-                    <i class='bx bx-user-plus'></i> Pacientes
                 </a>
                 <a href="{{ route('inventario.lotes.index') }}" class="{{ request()->is('inventario/lotes*') ? 'active-link' : '' }}">
                     <i class='bx bx-layer'></i> Lotes
@@ -431,6 +468,7 @@
                 <a href="{{ route('inventario.movimientos.historial') }}" class="{{ request()->is('inventario/movimientos*') ? 'active-link' : '' }}">
                     <i class='bx bx-transfer'></i> Movimientos
                 </a>
+                
                 @endif
 
             </div>
@@ -457,6 +495,12 @@
         // Dropdown toggle
         function toggleDropdown(id) {
             const dropdown = document.getElementById(id);
+            // Cierra los otros dropdowns abiertos para que no se amontonen
+            document.querySelectorAll('.nav-dropdown').forEach(function(el) {
+                if(el.id !== id) {
+                    el.classList.remove('open');
+                }
+            });
             dropdown.classList.toggle('open');
         }
 
