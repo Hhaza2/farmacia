@@ -7,6 +7,13 @@ use App\Http\Controllers\AlertaController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\Inventario\LoteController;
 use App\Http\Controllers\Inventario\MovimientoController;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Proveedor;
+use App\Models\Insumo;
+use App\Models\Alerta;
+
 
 // ========================================================
 // RUTAS PARA USUARIOS NO AUTENTICADOS (GUEST)
@@ -41,11 +48,25 @@ Route::middleware('auth')->group(function () {
     // --------------------------------------------------------
     // ÁREA EXCLUSIVA DEL ADMINISTRADOR (Rol 1)
     // --------------------------------------------------------
-    // Panel de Admin (Solo role_id: 1)
     Route::middleware('role:1')->prefix('admin')->group(function () {
         
         Route::get('/dashboard', function () {
-            return view('admin.index');
+            // Contamos los registros reales en la base de datos
+            $totalUsuarios = \App\Models\User::count();
+            $totalProveedores = \App\Models\Proveedor::count();
+            $totalInsumos = \App\Models\Insumo::count();
+            
+            $totalAlertas = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->count();
+
+            $alertasRecientes = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->orderBy('created_at', 'desc')
+                                ->take(5)
+                                ->get();
+
+            return view('admin.index', compact('totalUsuarios', 'totalProveedores', 'totalInsumos', 'totalAlertas', 'alertasRecientes'));
         })->name('admin.dashboard');
 
         // Protegido estrictamente solo para el Admin
@@ -62,7 +83,6 @@ Route::middleware('auth')->group(function () {
     // --------------------------------------------------------
     // RUTA COMPARTIDA: ADMIN Y FARMACIA (Roles 1 y 2)
     // --------------------------------------------------------
-    // Asumiendo que ambos necesitan gestionar o ver proveedores e insumos
     Route::middleware('role:1,2')->prefix('admin')->group(function () {
         
         Route::get('/proveedores', function () {
@@ -81,7 +101,29 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:2')->prefix('farmacia')->group(function () {
         
         Route::get('/dashboard', function () {
-            return view('farmacia.index');
+            // Contamos los registros reales
+            $totalInsumos = \App\Models\Insumo::count();
+            $totalProveedores = \App\Models\Proveedor::count();
+            
+            // 1. Contamos SOLO las alertas NO leídas (leida = 0)
+            $alertasPendientes = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->count();
+                                
+            // 2. Extra: Filtramos cuántas de esas alertas son de "stock crítico"
+            $stockCritico = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->where('tipo', 'stock_bajo')
+                                ->count();
+
+            // 3. Traemos las últimas 5 alertas NO leídas para la lista lateral
+            $alertasRecientes = \Illuminate\Support\Facades\DB::table('alertas')
+                                ->where('leida', 0)
+                                ->orderBy('created_at', 'desc')
+                                ->take(5)
+                                ->get();
+
+            return view('farmacia.index', compact('totalInsumos', 'totalProveedores', 'stockCritico', 'alertasPendientes', 'alertasRecientes'));
         })->name('farmacia.dashboard');
         
     });
@@ -92,7 +134,34 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:3')->prefix('enfermeria')->group(function () {
         
         Route::get('/dashboard', function () {
-            return view('enfermeria.index');
+            $hoy = Carbon::today();
+
+            $movimientosHoy = DB::table('movimientos')
+                                ->whereDate('created_at', $hoy)
+                                ->count();
+
+            $entradasHoy = DB::table('movimientos')
+                                ->whereDate('created_at', $hoy)
+                                ->where('tipo', 'Entrada')
+                                ->count();
+                                
+            $salidasHoy = DB::table('movimientos')
+                                ->whereDate('created_at', $hoy)
+                                ->where('tipo', 'Salida')
+                                ->count();
+
+            $detalleMovimientos = DB::table('movimientos')
+                                    ->select('created_at', 'tipo', 'cantidad', 'motivo', 'referencia')
+                                    ->whereDate('created_at', $hoy)
+                                    ->orderBy('created_at', 'desc')
+                                    ->take(10) 
+                                    ->get();
+
+            $totalInsumos = DB::table('insumos')->count();
+
+            return view('enfermeria.index', compact(
+                'movimientosHoy', 'entradasHoy', 'salidasHoy', 'detalleMovimientos', 'totalInsumos'
+            ));
         })->name('enfermeria.dashboard');
         
     });
@@ -105,7 +174,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/leida', [AlertaController::class, 'marcarLeida'])->name('alertas.leida');
         Route::post('/todas-leidas', [AlertaController::class, 'marcarTodasLeidas'])->name('alertas.todasLeidas');
     });
-    // Reportes (Admin y Farmacéutico)
+
+    // --------------------------------------------------------
+    // MÓDULO DE REPORTES (Admin y Farmacéutico)
+    // --------------------------------------------------------
     Route::middleware('role:1,2')->prefix('reportes')->name('reportes.')->group(function () {
         Route::get('/stock', [ReporteController::class, 'stock'])->name('stock');
         Route::get('/stock/pdf', [ReporteController::class, 'stockPdf'])->name('stock.pdf');
@@ -115,23 +187,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/ingresos/pdf', [ReporteController::class, 'ingresosPdf'])->name('ingresos.pdf');
     });
 
-    // Rutas de Admin (proveedores, insumos, configuraciones)
-    Route::get('/admin/proveedores', function () {
-        return view('farmacia.proveedores');
-    });
-    //Inventario (lotes y movimientos)
-
-    Route::get('/admin/insumos', function () {
-        return view('farmacia.insumos');
-    })->name('insumos.index');
-
-    Route::middleware('role:1')->group(function () {
-        Route::get('/admin/configuraciones', function () {
-            return view('admin.configuraciones');
-        });
-    });
-
-    // Inventario (lotes y movimientos)
+    // --------------------------------------------------------
+    // INVENTARIO (Lotes y Movimientos)
+    // --------------------------------------------------------
     Route::prefix('inventario')->name('inventario.')->group(function () {
 
         // LOTES
@@ -149,19 +207,5 @@ Route::middleware('auth')->group(function () {
         // HISTORIAL
         Route::get('historial', [MovimientoController::class, 'historial'])
             ->name('movimientos.historial');
-    });
-
-        Route::get('/admin/proveedores', function () {
-        return view('farmacia.proveedores');
-    });
-
-    Route::get('/admin/insumos', function () {
-        return view('farmacia.insumos'); 
-    })->name('insumos.index');
-    
-    Route::middleware(['auth', 'role:1'])->group(function () {
-        Route::get('/admin/configuraciones', function () {
-            return view('admin.configuraciones');
-        });
     });
 });
