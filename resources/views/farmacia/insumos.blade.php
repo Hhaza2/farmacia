@@ -179,7 +179,14 @@
         toast.className = `toast-custom toast-${tipo}`;
         const icono = tipo === 'success' ? 'bx-check-circle' : 'bx-error-circle';
         const titulo = tipo === 'success' ? '¡Operación Exitosa!' : 'Atención';
-        toast.innerHTML = `<div class="toast-icon"><i class='bx ${icono}'></i></div><div class="toast-content"><span class="toast-title">${titulo}</span><span class="toast-message">${mensaje}</span></div>`;
+        toast.innerHTML = `
+        <div class="toast-icon">
+            <i class='bx ${icono}'></i>
+        </div>
+        <div class="toast-content">
+            <span class="toast-title">${titulo}</span>
+            <span class="toast-message">${mensaje}</span>
+        </div>`;
         contenedor.appendChild(toast);
         setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3500);
     }

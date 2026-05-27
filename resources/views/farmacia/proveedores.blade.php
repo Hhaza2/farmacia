@@ -104,7 +104,6 @@
                         <button onclick="setFiltro('estado', 'Estado')">Estado</button>
                     </div>
                 </div>
-                <button class="btn-secondary"><i class='bx bx-export'></i> Exportar</button>
             </div>
         </div>
 

@@ -22,6 +22,10 @@ class DatabaseSeeder extends Seeder
             CategoriaSeeder::class,
             UbicacionSeeder::class,
             AreaSeeder::class,
+            ProveedorSeeder::class,
+            InsumoSeeder::class,
+            LoteSeeder::class,
+            MovimientoSeeder::class,
         ]);
     }
 }
